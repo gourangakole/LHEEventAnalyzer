@@ -1,0 +1,12 @@
+<use name="FWCore/Framework"/>
+<use   name="boost"/>
+<use   name="hepmc"/>
+<use   name="root"/>
+<lib   name="GenVector"/>
+<use   name="SimDataFormats/GeneratorProducts"/>
+<use   name="CommonTools/Utils"/>
+<use   name="DataFormats/JetReco"/>
+<use name="FWCore/PluginManager"/>
+<use name="FWCore/ParameterSet"/>
+<use name="DataFormats/TrackReco"/>
+<flags EDM_PLUGIN="1"/>
