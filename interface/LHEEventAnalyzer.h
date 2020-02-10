@@ -1,5 +1,7 @@
 #ifndef LHEEventAnalyzer_H
 #define LHEEventAnalyzer_H
+#include "Math/Vector4D.h"
+#include "Math/Vector4Dfwd.h"
 
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 
@@ -30,8 +32,11 @@ class LHEEventAnalyzer : public edm::EDAnalyzer
      TFile*      fOutputFile ;
      TH1D*       mult;
      TH1D*       uQuarkMult;
+     TH1F*       h_higgsPt;
      int nevent;
      edm::EDGetTokenT< LHEEventProduct > lhep_token;
+     std::vector<lhef::HEPEUP::FiveVector> lheParticles;
+     std::vector<ROOT::Math::PxPyPzEVector> higCands;
      // edm::EDGetTokenT<std::vector<reco::GenParticle> > genp_token;
      
 };
