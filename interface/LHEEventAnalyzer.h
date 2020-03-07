@@ -33,6 +33,9 @@ class LHEEventAnalyzer : public edm::EDAnalyzer
      TH1D*       mult;
      TH1D*       uQuarkMult;
      TH1F*       h_higgsPt;
+     TH1F*       h_higgsRap;
+     TH1F*       h_WbosonPt;
+     TH1F*       h_WbosonRap;
      int nevent;
      edm::EDGetTokenT< LHEEventProduct > lhep_token;
      std::vector<lhef::HEPEUP::FiveVector> lheParticles;

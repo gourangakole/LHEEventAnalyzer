@@ -53,6 +53,9 @@ LHEEventAnalyzer::LHEEventAnalyzer( const ParameterSet& pset )
    uQuarkMult = new TH1D( "uQuarkMult", "uQuarkMult multiplicity" , 5, -0.5 , 4.5 ) ;
    mult = new TH1D( "mult", "Parton multiplicity" , 5, -0.5 , 4.5 ) ; 
    h_higgsPt = new TH1F("h_higgsPt", "Higgs Pt", 100,0.0,200.0);
+   h_higgsRap = new TH1F("h_higgsRap", "higgsRap", 40, -10,10);
+   h_WbosonPt = new TH1F("h_WbosonPt", "W Pt", 100,0.0,200.0);
+   h_WbosonRap = new TH1F("h_WbosonRap", "WbosonRap", 40, -10,10);
    mult->Sumw2();
    uQuarkMult->Sumw2();
 }
@@ -63,6 +66,10 @@ LHEEventAnalyzer::~LHEEventAnalyzer()
   Hlist.Add(mult);
   Hlist.Add(uQuarkMult);
   Hlist.Add(h_higgsPt);
+  Hlist.Add(h_higgsRap);
+  Hlist.Add(h_WbosonPt);
+  Hlist.Add(h_WbosonRap);
+
   fOutputFile->cd() ;
   Hlist.Write() ;
   fOutputFile->Close() ;
@@ -79,6 +86,10 @@ void LHEEventAnalyzer::analyze( const Event& e, const EventSetup& )
    int npart = 0;
    int nuQuarkMult = 0;
    double higPt = 0.0;
+   double higRap = 0.0;
+   double WbosonPt = 0.0;
+   double WbosonRap = 0.0;
+
    Handle< LHEEventProduct > EvtHandle ;
    e.getByToken( lhep_token , EvtHandle ) ;
 
@@ -96,8 +107,19 @@ void LHEEventAnalyzer::analyze( const Event& e, const EventSetup& )
      if(absPdgId == 25){
        //std::cout << "lheParticles[i][0]= " << lheParticles[i][0] << std::endl;
        higPt = sqrt(lheParticles[i][0]*lheParticles[i][0] + lheParticles[i][1]*lheParticles[i][1]);
+       higRap = 0.5*log((lheParticles[i][3]+lheParticles[i][2])/(lheParticles[i][3]-lheParticles[i][2]));
        //std::cout << "PDG id LHE inside loop = " << EvtHandle->hepeup().IDUP[i] << std::endl;
        h_higgsPt->Fill(higPt,weight);
+       h_higgsRap->Fill(higRap,weight);
+	 //higCands.push_back(ROOT::Math::PxPyPzEVector(lheParticles[i][0],lheParticles[i][1],lheParticles[i][2],lheParticles[i][3]));
+     }
+     if(absPdgId == 24){
+       //std::cout << "lheParticles[i][0]= " << lheParticles[i][0] << std::endl;
+       WbosonPt = sqrt(lheParticles[i][0]*lheParticles[i][0] + lheParticles[i][1]*lheParticles[i][1]);
+       WbosonRap = 0.5*log((lheParticles[i][3]+lheParticles[i][2])/(lheParticles[i][3]-lheParticles[i][2]));
+       //std::cout << "PDG id LHE inside loop = " << EvtHandle->hepeup().IDUP[i] << std::endl;
+       h_WbosonPt->Fill(WbosonPt,weight);
+       h_WbosonRap->Fill(WbosonRap,weight);
 	 //higCands.push_back(ROOT::Math::PxPyPzEVector(lheParticles[i][0],lheParticles[i][1],lheParticles[i][2],lheParticles[i][3]));
      }
      //cout << "higCands.size()=  " << higCands.size() << " & " << "higgs pt= higCands[0].Pt() " << higCands[0].Pt()  <<  std::endl;
