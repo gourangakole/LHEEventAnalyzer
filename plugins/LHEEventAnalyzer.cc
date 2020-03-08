@@ -99,10 +99,13 @@ void LHEEventAnalyzer::analyze( const Event& e, const EventSetup& )
    if (whichWeight >= 0) weight *= EvtHandle->weights()[whichWeight].wgt/EvtHandle->originalXWGTUP(); 
 
    for (int i = 0; i < EvtHandle->hepeup().NUP; ++i) {
+     /*
      if (EvtHandle->hepeup().ISTUP[i] != 1) { // keep only outgoing particles
        //cout << reader->hepeup.ISTUP[i] << ", " << reader->hepeup.IDUP[i] << endl;
+       // 1 = final-state parton, 2 = intermediate resonance with preserved m
        continue;
      }
+     */
      unsigned absPdgId = std::abs(EvtHandle->hepeup().IDUP[i]);
      if(absPdgId == 25){
        //std::cout << "lheParticles[i][0]= " << lheParticles[i][0] << std::endl;
